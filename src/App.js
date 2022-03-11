@@ -5,6 +5,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         Image Compositor
+        Init Push
       </header>
     </div>
   );
