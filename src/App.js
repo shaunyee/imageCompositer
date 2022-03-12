@@ -1,12 +1,10 @@
+import Compositor from './components/Pages/Compositor/Compositor';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        Image Compositor
-        Init Push
-      </header>
+      <Compositor />
     </div>
   );
 }
