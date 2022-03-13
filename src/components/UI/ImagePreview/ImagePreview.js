@@ -3,7 +3,7 @@ import styled from "styled-components";
 import CustomButton from "../CustomButton/CustomButton";
 import { defaultValues } from "../../Utils/Constants/defaultValues";
 
-export default function ImagePreview({ imageUrl, imageText, rgba, fontSize, textColor, verticalTextPositon, horizontalTextPosition }) {
+export default function ImagePreview({ imageUrl, imageText, rgba, fontSize, textColor, verticalTextPositon, horizontalTextPosition, imageRef }) {
     const [viewerSize, setViewerSize] = useState(defaultValues.defaultPreviewSize);
     function handlePreviewSizeChange(e) {
         const {value} = e.target;
@@ -13,7 +13,7 @@ export default function ImagePreview({ imageUrl, imageText, rgba, fontSize, text
         <div>
             {imageUrl ?
                 <Container>
-                    <Previwer viewerSize={viewerSize}>
+                    <Previwer viewerSize={viewerSize} ref={imageRef}>
                         <ImageText 
                             fontSize={fontSize} 
                             textColor={textColor} 
@@ -36,11 +36,11 @@ export default function ImagePreview({ imageUrl, imageText, rgba, fontSize, text
                     </div>
                 </Container>
                 :
-                <Previwer size="500px">
+                <Container size="500px">
                     <p>
                         Please Add an Image to Preview
                     </p>
-                </Previwer>
+                </Container>
             }
         </div>
     )

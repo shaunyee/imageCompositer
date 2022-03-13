@@ -1,10 +1,13 @@
-import {useState} from 'react';
+import {useState, useCallback, useRef} from 'react';
+import { toCanvas } from 'html-to-image';
 import ImagePreview from '../UI/ImagePreview/ImagePreview';
 import ImageUploader from './../ImageUploader/ImageUploader';
 import BlendColorEditor from '../BlendColorEditor/BlendColorEditor';
 import TextEditor from './../TextEditor/TextEditor';
+import Modal from '../UI/Modal/Modal';
+import CustomButton from '../UI/CustomButton/CustomButton';
 import { defaultValues } from '../Utils/Constants/defaultValues';
-import {URIEncodeBuilder} from '../Utils/URIEncodeBuilder';
+import { createImageQueryString } from '../Utils/createImageQueryString';
 
 export default function Compositor() {
     const [imageUrl, setImageUrl] = useState('')
@@ -15,8 +18,37 @@ export default function Compositor() {
     const [horizontalTextPosition, setHorizontalTextPosition] = useState(defaultValues.horizontalTextPosition);
     const [textColor, setTextColor] = useState(defaultValues.textColor);
     const [fontSize, setFontSize] = useState(defaultValues.fontSize);
+    const [modalOpen, setModalOpen] = useState(false)
+    const [loading, setloading] = useState(false)
+    const [imageDownloadLink, setImageDownloadLink] = useState('')
+    const imageRef = useRef(null);
+    const canvasRef = useRef(null);
+    const onButtonClick = useCallback(() => {
+        if (imageRef.current === null) {
+          return
+        }
+        setloading(true)
+        setModalOpen(true)
+        toCanvas(imageRef.current, { cacheBust: true, })
+          .then((canvas) => {
+              const url = canvas.toDataURL();
+              canvasRef.current.appendChild(canvas)
+              setImageDownloadLink(url)
+              setloading(false)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }, [imageRef]);
   return (
     <div>
+        { modalOpen && <Modal 
+            canvasRef={canvasRef} 
+            setModalOpen={setModalOpen} 
+            loading={loading} 
+            imageDownloadLink={imageDownloadLink} 
+            downloadName={createImageQueryString("TestImage.JPEG", imageText, blendColor)}
+        /> }
         <div>
             Compositor
         </div>
@@ -30,6 +62,7 @@ export default function Compositor() {
                     textColor={textColor} 
                     verticalTextPositon={verticalTextPositon} 
                     horizontalTextPosition={horizontalTextPosition}
+                    imageRef={imageRef}
                 />
             </div>
             <div>
@@ -58,6 +91,7 @@ export default function Compositor() {
                 setFontSize={setFontSize}
             />
         </div>
+        <CustomButton btnTxt="Render Image" onClickFunc={onButtonClick}/>
     </div>
   )
 }
