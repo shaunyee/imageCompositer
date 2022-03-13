@@ -1,16 +1,12 @@
 import { SketchPicker } from 'react-color';
 
-export default function ColorPicker({ blendColor, setBlendColor, setRgba, rgba }) {
-    function handleColorPickerChange(color) {
-        setBlendColor(color.hex);
-        setRgba(color.rgb)
-    }
+export default function ColorPicker({ color, changeFunc }) {
   return (
     <div>
         Color Picker
         <SketchPicker 
-            color={rgba}
-            onChange={handleColorPickerChange}
+            color={color}
+            onChange={changeFunc}
         />
     </div>
   )

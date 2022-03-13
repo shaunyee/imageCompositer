@@ -1,4 +1,4 @@
-import Compositor from './components/Pages/Compositor/Compositor';
+import Compositor from './components/Compositor/Compositor';
 import './App.css';
 
 function App() {
