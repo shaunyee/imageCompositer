@@ -40,7 +40,7 @@ const ModalContent = styled.div`
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: ${props=> props.viewerSize};
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items:center;

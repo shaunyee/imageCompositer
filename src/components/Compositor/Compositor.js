@@ -35,6 +35,7 @@ export default function Compositor() {
         toCanvas(imageRef.current, { cacheBust: true, })
             .then((canvas) => {
                 const url = canvas.toDataURL();
+                canvas.style = `width: 100%`
                 canvasRef.current.appendChild(canvas)
                 setImageDownloadLink(url)
                 setloading(false)
