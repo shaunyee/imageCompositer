@@ -1,9 +1,8 @@
 import React from 'react'
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import styled from 'styled-components'
 import { theme } from '../../../Theme/theme'
 
-export default function Modal({ canvasRef, setModalOpen, loading, imageDownloadLink, downloadName, viewerSize }) {
+export default function Modal({ children, setModalOpen, viewerSize }) {
     function handleCloseModal() {
         setModalOpen(false)
     }
@@ -13,12 +12,7 @@ export default function Modal({ canvasRef, setModalOpen, loading, imageDownloadL
                 <Header>
                     <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
                 </Header>
-                <h3>Here is your rendered image!</h3>
-                <div ref={canvasRef}>
-                    {loading ? <LoadingSpinner /> : null}
-                </div>
-                DownLoad Your Image Here:
-                <a href={imageDownloadLink} download="Test.png" >{downloadName}</a>
+                {children}
             </ModalContent>
         </ModalContainer>
     )

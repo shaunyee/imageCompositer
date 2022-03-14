@@ -7,6 +7,7 @@ import BlendColorEditor from '../BlendColorEditor/BlendColorEditor';
 import TextEditor from './../TextEditor/TextEditor';
 import Modal from '../UI/Modal/Modal';
 import Card from '../UI/CustomCard/CustomCard';
+import RederedImage from '../RederedImage/RederedImage';
 import CustomButton from '../UI/CustomButton/CustomButton';
 import { defaultValues } from '../Utils/Constants/defaultValues';
 import { createImageQueryString } from '../Utils/createImageQueryString';
@@ -52,13 +53,17 @@ export default function Compositor() {
         <CompositerContainer>
             <h1>Image Compositor</h1>
             {modalOpen && <Modal
-                canvasRef={canvasRef}
                 setModalOpen={setModalOpen}
-                loading={loading}
-                imageDownloadLink={imageDownloadLink}
                 viewerSize={viewerSize}
-                downloadName={createImageQueryString("TestImage.JPEG", imageText, blendColor)}
-            />}
+            >
+                <RederedImage 
+                    canvasRef={canvasRef} 
+                    loading={loading} 
+                    imageDownloadLink={imageDownloadLink} 
+                    downloadName={createImageQueryString("TestImage.JPEG", imageText, blendColor)} 
+                />
+            </Modal>
+        }
                 <ImagePreview
                     imageUrl={imageUrl}
                     rgba={rgba}
