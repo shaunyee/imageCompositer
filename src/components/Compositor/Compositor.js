@@ -24,7 +24,6 @@ export default function Compositor() {
     const [fontSize, setFontSize] = useState(defaultValues.fontSize);
     const [modalOpen, setModalOpen] = useState(false)
     const [viewerSize, setViewerSize] = useState(defaultValues.defaultPreviewSize);
-    const [imageDownloadLink, setImageDownloadLink] = useState('');
     const imageRef = useRef(null);
     const canvasRef = useRef(null);
     const [renderImage, loading, downloadUrl] = useRenderImage(imageRef, canvasRef);
