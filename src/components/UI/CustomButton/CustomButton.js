@@ -4,11 +4,11 @@ import { theme } from '../../../Theme/theme';
 
 export default function CustomButton({ btnTxt, disabled = false, type = "button", onClickFunc, value, }) {
   return (
-    <div>
+    <ButtonContainer>
       <Button disabled={disabled} type={type} value={value} onClick={(e) => onClickFunc(e)} >
         {btnTxt}
       </Button>
-    </div>
+    </ButtonContainer>
   )
 }
 
@@ -42,3 +42,7 @@ const Button = styled.button`
     transform: translateY(-2px);
 }
 `;
+
+const ButtonContainer = styled.div`
+  margin:5px;
+`

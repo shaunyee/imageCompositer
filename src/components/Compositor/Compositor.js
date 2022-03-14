@@ -54,6 +54,7 @@ export default function Compositor() {
                 setModalOpen={setModalOpen}
                 loading={loading}
                 imageDownloadLink={imageDownloadLink}
+                viewerSize={viewerSize}
                 downloadName={createImageQueryString("TestImage.JPEG", imageText, blendColor)}
             />}
                 <ImagePreview

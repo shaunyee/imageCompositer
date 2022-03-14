@@ -1,19 +1,20 @@
 import React from 'react'
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import styled from 'styled-components'
+import { theme } from '../../../Theme/theme'
 
-export default function Modal({ canvasRef, setModalOpen, loading, imageDownloadLink, downloadName }) {
+export default function Modal({ canvasRef, setModalOpen, loading, imageDownloadLink, downloadName, viewerSize }) {
     function handleCloseModal() {
         setModalOpen(false)
     }
     return (
         <ModalContainer>
-            <ModalContent>
+            <ModalContent viewerSize={viewerSize}>
                 <Header>
                     <CloseButton onClick={handleCloseModal}>&times;</CloseButton>
                 </Header>
+                <h3>Here is your rendered image!</h3>
                 <div ref={canvasRef}>
-                    <h3>Modal Content</h3>
                     {loading ? <LoadingSpinner /> : null}
                 </div>
                 DownLoad Your Image Here:
@@ -31,16 +32,15 @@ const ModalContainer = styled.div`
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 `;
 
 const ModalContent = styled.div`
-    background-color: #fefefe;
+    background-color: ${theme.white};
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: ${props=> props.viewerSize};
     display: flex;
     justify-content: center;
     align-items:center;
