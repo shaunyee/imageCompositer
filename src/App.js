@@ -1,12 +1,20 @@
 import Compositor from './components/Compositor/Compositor';
-import './App.css';
+import styled from 'styled-components';
+import { theme } from './Theme/theme';
 
 function App() {
   return (
-    <div className="App">
+    <AppContainer>
       <Compositor />
-    </div>
+    </AppContainer>
   );
 }
 
 export default App;
+
+const AppContainer = styled.div`
+  margin: 20px;
+  padding: 10px;
+  color: ${theme.black};
+  font-weight: 500;
+`;

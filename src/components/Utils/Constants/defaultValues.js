@@ -10,15 +10,15 @@ export const defaultValues = {
     viwerSizes: [
     {
         label: 'SM',
-        size:'500px'
+        size:'250px'
     },
     {
         label: 'MD',
-        size:'750px'
+        size:'500px'
     },
     {
         label: 'LG',
-        size:'1000px'
+        size:'750px'
     },
     ],
     textAlignmentVertical: [

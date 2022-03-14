@@ -1,6 +1,8 @@
-import React from 'react'
+import React from 'react';
+import styled from 'styled-components';
+import { theme } from '../../../Theme/theme';
 
-export default function CustomSelect({ options, selectName, label, defaultValue, changeFunc, placeholder, placeholderText }) {
+export default function CustomSelect({ options, selectName, label, defaultValue, changeFunc, placeholder, placeholderText, selectWidth }) {
   function handleChange(e) {
     const {value} = e.target;
     changeFunc(value);
@@ -15,17 +17,40 @@ export default function CustomSelect({ options, selectName, label, defaultValue,
   return (
     <div>
       <label htmlFor={selectName}>{label}:</label>
-      <select name={selectName} id={selectName} defaultValue={defaultValue} onChange={handleChange}>
+      <SelectBox 
+        name={selectName} 
+        id={selectName} 
+        defaultValue={defaultValue} 
+        onChange={handleChange}
+        selectWidth={selectWidth}
+        >
         {placeholder ? 
-        <option value="" disabled>
+        <SelectOptions value="" disabled>
           {placeholderText}
-        </option> : 
+        </SelectOptions> : 
         null
         }
         {
-          options.map(option => <option value={option.value} key={option.label}>{option.label}</option>)
+          options.map(option => <SelectOptions value={option.value} key={option.label}>{option.label}</SelectOptions>)
         }
-      </select>
+      </SelectBox>
     </div>
   )
 }
+
+const SelectBox = styled.select`
+  position: relative;
+  display: block;
+  width: ${props => props.selectWidth || "90%"};
+  margin: 0 auto;
+  font-family: ${theme.font};
+  font-size: 18px;
+  color: ${theme.black};
+  background-color: #E8A87C;
+`;
+
+const SelectOptions = styled.option`
+  display: block;
+  padding: 15px;
+  background-color: #E8A87C;
+`

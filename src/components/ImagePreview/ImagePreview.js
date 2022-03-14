@@ -1,48 +1,32 @@
-import { useState } from 'react';
 import styled from "styled-components";
-import CustomButton from "../CustomButton/CustomButton";
-import { defaultValues } from "../../Utils/Constants/defaultValues";
+import { theme } from "../../Theme/theme";
 
-export default function ImagePreview({ imageUrl, imageText, rgba, fontSize, textColor, verticalTextPositon, horizontalTextPosition, imageRef }) {
-    const [viewerSize, setViewerSize] = useState(defaultValues.defaultPreviewSize);
-    function handlePreviewSizeChange(e) {
-        const {value} = e.target;
-        setViewerSize(value)
-    }
+export default function ImagePreview({ imageUrl, imageText, rgba, fontSize, textColor, verticalTextPositon, horizontalTextPosition, imageRef, viewerSize }) {
     return (
-        <div>
+        <FullContainer>
             {imageUrl ?
-                <Container>
+                <Container viewerSize={viewerSize}>
                     <Previwer viewerSize={viewerSize} ref={imageRef}>
-                        <ImageText 
-                            fontSize={fontSize} 
-                            textColor={textColor} 
-                            verticalTextPositon={verticalTextPositon} 
+                        <ImageText
+                            fontSize={fontSize}
+                            textColor={textColor}
+                            verticalTextPositon={verticalTextPositon}
                             horizontalTextPosition={horizontalTextPosition}
-                            >
-                                {imageText}
+                        >
+                            {imageText}
                         </ImageText>
                         <BlendColor color={rgba} />
                         <Image src={imageUrl} />
                     </Previwer>
-                    <div>
-                        <ViewSizeButtons>
-                            {
-                                defaultValues.viwerSizes.map(viewer => {
-                                    return <CustomButton onClickFunc={handlePreviewSizeChange} btnTxt={viewer.label} value={viewer.size} disabled={viewer.size === viewerSize} key={viewer.label}/>
-                                })
-                            }
-                        </ViewSizeButtons>
-                    </div>
                 </Container>
                 :
-                <Container size="500px">
-                    <p>
+                <Container viewerSize={viewerSize}>
+                    <Previwer viewerSize={viewerSize}>
                         Please Add an Image to Preview
-                    </p>
+                    </Previwer>
                 </Container>
             }
-        </div>
+        </FullContainer>
     )
 }
 
@@ -50,7 +34,15 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: ${props => props.viewerSize };
     align-items: center;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    :hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    background-color: ${theme.white}
 `;
 
 const Previwer = styled.div.attrs(props => ({
@@ -104,9 +96,9 @@ const BlendColor = styled.div.attrs(props => ({
     bottom: 0;
 `;
 
-const ViewSizeButtons = styled.ul`
+const FullContainer = styled.div`
 display: flex;
-justify-content: space-around;
+flex-direction: row;
+justify-content: center;
+align-itemsL center;
 `
-
-
