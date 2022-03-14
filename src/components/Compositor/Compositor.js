@@ -9,6 +9,7 @@ import Modal from '../UI/Modal/Modal';
 import Card from '../UI/CustomCard/CustomCard';
 import RederedImage from '../RederedImage/RederedImage';
 import CustomButton from '../UI/CustomButton/CustomButton';
+import useRenderImage from '../Hooks/useRenderImage';
 import { defaultValues } from '../Utils/Constants/defaultValues';
 import { createImageQueryString } from '../Utils/createImageQueryString';
 
@@ -22,29 +23,15 @@ export default function Compositor() {
     const [textColor, setTextColor] = useState(defaultValues.textColor);
     const [fontSize, setFontSize] = useState(defaultValues.fontSize);
     const [modalOpen, setModalOpen] = useState(false)
-    const [loading, setloading] = useState(false)
     const [viewerSize, setViewerSize] = useState(defaultValues.defaultPreviewSize);
-    const [imageDownloadLink, setImageDownloadLink] = useState('')
+    const [imageDownloadLink, setImageDownloadLink] = useState('');
     const imageRef = useRef(null);
     const canvasRef = useRef(null);
-    const onRenderImage = useCallback(() => {
-        if (imageRef.current === null) {
-            return
-        }
-        setloading(true)
+    const [renderImage, loading, downloadUrl] = useRenderImage(imageRef, canvasRef);
+    function onRenderImage() {
         setModalOpen(true)
-        toCanvas(imageRef.current, { cacheBust: true, })
-            .then((canvas) => {
-                const url = canvas.toDataURL();
-                canvas.style = `width: 100%`
-                canvasRef.current.appendChild(canvas)
-                setImageDownloadLink(url)
-                setloading(false)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, [imageRef]);
+        renderImage()
+    }
     function handlePreviewSizeChange(e) {
         const { value } = e.target;
         setViewerSize(value)
@@ -59,7 +46,7 @@ export default function Compositor() {
                 <RederedImage 
                     canvasRef={canvasRef} 
                     loading={loading} 
-                    imageDownloadLink={imageDownloadLink} 
+                    imageDownloadLink={downloadUrl} 
                     downloadName={createImageQueryString("TestImage.JPEG", imageText, blendColor)} 
                 />
             </Modal>
