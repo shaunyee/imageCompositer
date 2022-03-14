@@ -49,6 +49,7 @@ export default function Compositor() {
     }
     return (
         <CompositerContainer>
+            <h1>Image Compositor</h1>
             {modalOpen && <Modal
                 canvasRef={canvasRef}
                 setModalOpen={setModalOpen}
@@ -112,6 +113,7 @@ export default function Compositor() {
 }
 
 const CompositerContainer = styled.div`
+    text-align: center
 `
 
 const EditorsContainer = styled.div`
