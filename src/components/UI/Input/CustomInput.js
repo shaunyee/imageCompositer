@@ -1,22 +1,21 @@
-import React from 'react';
 import styled from 'styled-components';
 import { theme } from './../../../Theme/theme';
 
-export default function CustomInput({ label, itemValue, updaterFunction, onBlurFunc, onEnterfunc, inputWidth }) {
+export default function CustomInput({ label, itemValue, updaterFunction, onBlurFunc, onEnterfunc, inputWidth, isolated, isoInputValue, setIsoInputValue }) {
     function handleChange(e) {
         const { value } = e.target;
-        updaterFunction(value)
+        !isolated ? updaterFunction(value): setIsoInputValue(value);
     }
     function handleEnterKeyCheck(e) {
         if(e.key === 'Enter') {
-            onEnterfunc()
+            onEnterfunc(e);
         }
     }
 return (
     <div>
         <label>{label}</label>
         <Input 
-            value={itemValue} 
+            value={!isolated ? itemValue : isoInputValue} 
             onChange={(e) => handleChange(e)} 
             onBlur={onBlurFunc} 
             onKeyPress={(e) => handleEnterKeyCheck(e)}
