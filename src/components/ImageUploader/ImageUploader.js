@@ -1,4 +1,4 @@
-import React from 'react';
+import {useState} from 'react';
 import styled from 'styled-components';
 import CustomInput from '../UI/Input/CustomInput';
 import CustomSelect from '../UI/CustomSelect/CustomSelect';
@@ -7,6 +7,19 @@ import { stockImages } from './stockImages';
 import { theme } from '../../Theme/theme';
 
 export default function ImageUploader({ imageUrl, setImageUrl }) {
+    const [isoInputValue, setIsoInputValue] = useState('');
+    function onBlurUpdateImageURl(e) {
+        const {value} = e.target;
+        setImageUrl(value)
+    }
+    function onEnterKeyUpdateImageURl(e) {
+        const {value} = e.target;
+        setImageUrl(value)
+    }
+    function handleIsolatedInputChange(value) {
+        setImageUrl(value);
+        setIsoInputValue(value);
+    }
     return (
         <ImageUploaderContainer>
             <div>
@@ -16,7 +29,12 @@ export default function ImageUploader({ imageUrl, setImageUrl }) {
             <ImageUploaderContent>
                 <ImageUrlInputContainer>
                     <CustomInput 
-                        itemValue={imageUrl} 
+                        itemValue={imageUrl}
+                        onBlurFunc={onBlurUpdateImageURl}
+                        onEnterfunc={onEnterKeyUpdateImageURl}
+                        setIsoInputValue={setIsoInputValue}
+                        isoInputValue={isoInputValue}
+                        isolated
                         updaterFunction={setImageUrl} 
                         label="Add an image url" />
                 </ImageUrlInputContainer>
@@ -26,7 +44,7 @@ export default function ImageUploader({ imageUrl, setImageUrl }) {
                         selectName="stockimages"
                         label="Stock Images"
                         defaultValue=""
-                        changeFunc={setImageUrl}
+                        changeFunc={handleIsolatedInputChange}
                         placeholder
                         placeholderText="Select a Stock Image to Try"
                         selectWidth="100%"
