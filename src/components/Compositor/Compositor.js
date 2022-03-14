@@ -26,7 +26,7 @@ export default function Compositor() {
     const [imageDownloadLink, setImageDownloadLink] = useState('')
     const imageRef = useRef(null);
     const canvasRef = useRef(null);
-    const onButtonClick = useCallback(() => {
+    const onRenderImage = useCallback(() => {
         if (imageRef.current === null) {
             return
         }
@@ -80,7 +80,7 @@ export default function Compositor() {
                 </ViewSizeButtons>
             </div>
             <RenderButtonContainer>
-                <CustomButton btnTxt={imageUrl ? "Render Image" : "Please add an Image to Render"} onClickFunc={onButtonClick} disabled={!imageUrl} />
+                <CustomButton btnTxt={imageUrl ? "Render Image" : "Please add an Image to Render"} onClickFunc={onRenderImage} disabled={!imageUrl} />
             </RenderButtonContainer>
             <EditorsContainer>
                 <Card cardWidth="400px" >
